@@ -1,0 +1,50 @@
+{% extends "shop/layouts/main.html" %}
+
+
+{% block content %}
+
+<div class="container" style="margin-top:70px">
+    <div class="row">
+        <div class="col-12">
+            <h4 class="mb-3">Cart</h4>
+          <hr style="border-color:#b8bfc2;">  
+        </div>
+        <table class="table table-bordered">
+            <tr>
+                <th>Image</th>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+                <th>Remove</th>
+            </tr>
+            {% for item in cart %}
+            <tr>
+                <td><img src="{{ item.product.product_image.url }}" style="width: 50px; height: 50px;" alt="{{item.product.name}}"></td>
+                <td>{{ item.product.name }}</td>
+                <td>{{ item.product_qty }}</td>
+                <td>Rs. {{ item.product.selling_price | stringformat:'d' }}</td>
+                <td class="amt">Rs. {{item.total_price | stringformat:"d"}}</td>
+                <td><a href="{% url "remove_from_cart" item.id %}" onclick="return confirm('Are you sure to delete')" class="btn btn-danger btn-m"><i class="fa fa-trash"></i>Remove</a></td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td></td>
+                <td></td>
+                <td colspan="2"><b>Total</b></td>
+                <td id="net"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<script>
+    // JavaScript to sum up values
+    const nodes = document.querySelectorAll(".amt");
+    const total = Array.from(nodes).reduce((sum, node) => {
+        const value = node.textContent.replace("Rs.", "").trim(); // Remove 'Rs.' and trim spaces
+        return sum + Number(value); // Convert to number and add
+    }, 0);
+    document.getElementById("net").innerHTML = "Total: Rs. " + total;
+</script>
+
+{% endblock content %}

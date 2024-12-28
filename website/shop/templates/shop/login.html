@@ -1,0 +1,26 @@
+{% extends 'shop/layouts/main.html' %}
+
+{% block content %}
+  <div class="container" style="margin-top:70px;min-height:600px;">
+    <div class="row">
+      <div class="col-12">
+        <h4 class="mb-3"> New login</h4>
+        <hr style="border-color:#b8bfc2;">
+        {% include 'shop/inc/message.html' %}
+        <form method="post" action="">
+            {% csrf_token %}
+            <div class="mb-4">
+              <label for="" class="form-label">Username</label>
+              <input type="text" class="form-control" name="username" required>
+            </div>
+            <div class="mb-4">
+              <label for="" class="form-label">Password</label>
+              <input type="password" class="form-control" name="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+          
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
